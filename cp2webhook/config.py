@@ -85,7 +85,6 @@ schema = Schema({
 def load_config(config_file):
     config = yaml.safe_load(config_file)
     try:
-        print(config)
         config = schema.validate(config)
     except SchemaError as e:
         # Better error format

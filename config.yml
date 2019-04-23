@@ -1,0 +1,13 @@
+zmq:
+  host: 127.0.0.1
+  port: 5680
+  timeout: 5000
+webhooks:
+  - name: Ubidots industrial.api.ubidots.com
+    url: "https://industrial.api.ubidots.com/api/v1.6/devices/$.id"
+    method: post
+    headers:
+      X-Auth-Token: token
+    json: $
+    params:
+      type: cooper

@@ -1,6 +1,5 @@
 import pip
 import setuptools
-import cp2webhook as target
 
 with open('requirements.txt', 'r') as f:
     requirements = f.read()
@@ -8,12 +7,14 @@ with open('requirements.txt', 'r') as f:
 with open('README.md', 'r') as f:
     long_description = f.read()
 
+name = 'cp2webhook'
+
 setuptools.setup(
-    name=target.__name__,
-    version=target.__version__,
+    name=name,
+    version='@@VERSION@@',
     author='HARDWARIO s.r.o.',
     author_email='ask@hardwario.com',
-    description=target.__doc__,
+    description='COOPER to Webhook',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/hardwario/cp2webhook',
@@ -34,7 +35,7 @@ setuptools.setup(
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            '%s=%s:main' % (target.__name__, target.__name__)
+            '%s=%s:main' % (name, name)
         ]
     }
 )

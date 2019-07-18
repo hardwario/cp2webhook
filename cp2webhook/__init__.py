@@ -1,8 +1,10 @@
 'COOPER to Webhook'
 
 import click
+import click_log
 import datetime
 import json
+import logging
 import logging.config
 import sys
 import zmq
@@ -19,6 +21,7 @@ __version__ = '@@VERSION@@'
 @click.option('--config', '-c', 'config_file', type=click.File('r'), required=True, help='Configuration file.')
 @click.option('--test', is_flag=True, help='Test configuration file.')
 @click.version_option(version=__version__)
+@click_log.simple_verbosity_option(default='INFO')
 def cli(config_file, test=False):
     '''ZeroMQ to stdout.'''
 
@@ -90,6 +93,8 @@ def run(config):
                     kwargs['headers'] = get_value(webhook['headers'], message)
 
                 url = webhook['url'].replace('$.id', message['id'])
+
+                logging.debug("Request: url=%s %s", url, kwargs)
 
                 response = requests.request(webhook['method'], url, **kwargs)
 

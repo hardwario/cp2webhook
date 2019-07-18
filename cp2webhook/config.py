@@ -62,6 +62,18 @@ def jsonPath_or_obj(obj):
     return obj
 
 
+def jsonPath_or_obj_recursive(obj):
+    if isinstance(obj, str):
+        if '$' in obj:
+            return json_path(obj)
+
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            obj[k] = jsonPath_or_obj_recursive(v)
+
+    return obj
+
+
 schema = Schema({
     'zmq': {
         'host': And(str, len),
@@ -72,8 +84,8 @@ schema = Schema({
         Optional('name'): And(str, len),
         'url': And(str, len),
         'method': And(str, Use(method)),
-        Optional('data'): Or({str: Use(jsonPath_or_obj)}, Use(jsonPath_or_obj)),
-        Optional('json'): Or({str: Use(jsonPath_or_obj)}, Use(jsonPath_or_obj)),
+        Optional('data'): Or({str: Use(jsonPath_or_obj_recursive)}, Use(jsonPath_or_obj_recursive)),
+        Optional('json'): Or({str: Use(jsonPath_or_obj_recursive)}, Use(jsonPath_or_obj_recursive)),
         Optional('params'): Or({str: Use(jsonPath_or_obj)}, Use(jsonPath_or_obj)),
         Optional('headers'): {str: Use(jsonPath_or_obj)},
         Optional('condition'): {str: [Use(str)]}

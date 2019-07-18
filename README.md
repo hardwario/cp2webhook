@@ -35,7 +35,7 @@ cp2webhook -c config.yml
 
 ### Systemd
 
-Insert this snippet to the file /lib/systemd/system/cp2webhook.service:
+Insert this snippet to the file /etc/systemd/system/cp2webhook.service:
 ```
 [Unit]
 Description=COOPER cp2webhook
